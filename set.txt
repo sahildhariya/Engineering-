@@ -1,0 +1,140 @@
+#include <stdio.h>
+
+int main()
+{
+  int j,l,i, n, m, A[20], B[20], C[40], C1[40], C2[40], U[40], symOneSize, symTwoSize;
+
+  printf("Enter number of elements in Set A\n");
+  scanf("%d",&m);
+  printf("Enter number of elements in Set B\n");
+  scanf("%d",&n);
+
+  printf("Now enter the distinct elements of set A\n");
+  for (i = 0; i < m; i++) {
+    scanf("%d",&A[i]);
+  }
+  printf("Now enter the distinct elements of set B\n");
+  for (i = 0; i < n; i++) {
+    scanf("%d",&B[i]);
+  }
+
+  printf("\n-------------\nA = {");
+  for (i = 0; i < m - 1; i++) {
+    printf("%d,",A[i]);
+  }
+  printf("%d}\n",A[i]); //the value of i will naturally be equal to m - 1 which is the index of last element of array.
+
+  printf("B = {");
+  for (i = 0; i < n - 1; i++) {
+    printf("%d,",B[i]);
+  }
+  printf("%d}",B[i]); //the value of i will naturally be equal to n - 1 which is the index of last element of array.
+
+//INTERSECTION
+
+  l = 0;
+
+  for(i = 0; i < m; i++){
+    for(j = 0; j < n; j++){
+      if(A[i] == B[j]){
+        C[l++] = A[i];
+        break;
+      } //end of condition
+    }//end of inner for
+  }//end of outer for
+
+  printf("\n-------------\nThe intersection is: {");
+
+  for (i = 0; i < l - 1; i++) {
+    printf("%d,",C[i]);
+  }
+  printf("%d}",C[i]);
+
+//DIFFERENCE  A - B
+
+  l = 0;
+  for(i = 0; i < m; i++){// loop for A
+    for(j = 0; j < n; j++){
+      if(A[i] == B[j]){
+        break;
+      } //end of condition
+    }//end of inner for
+    if(j == n){
+      C1[l++] = A[i];
+    }//end of condition
+  }//end of outer for
+  symOneSize = l;
+  printf("\n-------------\nThe Difference A - B is: {");
+
+  for (i = 0; i < l - 1; i++) {
+    printf("%d,",C1[i]);
+  }
+  printf("%d}",C1[i]);
+
+  //DIFFERENCE    B - A
+
+    l = 0;
+    for(i = 0; i < n; i++){ // loop for B
+      for(j = 0; j < m; j++){
+        if(B[i] == A[j]){
+          break;
+        } //end of condition
+      }//end of inner for
+      if(j == m){
+        C2[l++] = B[i];
+      }//end of condition
+    }//end of outer for
+    symTwoSize = l;
+    printf("\n-------------\nThe Difference B - A is: {");
+
+    for (i = 0; i < l - 1; i++) {
+      printf("%d,",C2[i]);
+    }
+    printf("%d}",C2[i]);
+
+    //UNION   AUB = A + B - A
+    //Using A
+    l = 0;
+    for(i = 0; i < m; i ++){
+      U[l] = A[i];
+      l++;
+    }
+
+    //Finding B - A
+    for(i = 0; i < n; i++){ // loop for B
+      for(j = 0; j < m; j++){
+        if(B[i] == A[j]){
+          break;
+        } //end of condition
+      }//end of inner for
+      if(j == m){
+        U[l] = B[i];
+        l++;
+      }//end of condition
+    }//end of outer for
+
+    printf("\n-------------\nThe Union is: {");
+
+    for (i = 0; i < l - 1; i++) {
+      printf("%d,",U[i]);
+    }
+    printf("%d}",U[i]);
+
+  //SYMMETRIC DIFFERENCE BY TAKING UNION OF A - B AND B - A
+  l = 0;
+  for(i = 0; i < symOneSize; i ++){
+    C[l] = C1[i];
+    l++;
+  }
+  for(i = 0; i < symTwoSize; i ++){
+    C[l] = C2[i];
+    l++;
+  }
+
+  printf("\n-------------\nThe Symmetric Difference is: {");
+
+  for (i = 0; i < l - 1; i++) {
+    printf("%d,",C[i]);
+  }
+  printf("%d}\n-------------",C[i]);
+}
